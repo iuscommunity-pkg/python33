@@ -1,0 +1,11 @@
+--- Python-3.3.0/Lib/test/test_gdb.py.org	2012-09-29 03:00:35.000000000 -0500
++++ Python-3.3.0/Lib/test/test_gdb.py	2012-10-08 09:04:48.233610545 -0500
+@@ -19,6 +19,8 @@
+ 
+ from test.support import run_unittest, findfile, python_is_optimized
+ 
++raise unittest.SkipTest('Disable gdb testing')
++
+ try:
+     gdb_version, _ = subprocess.Popen(["gdb", "--version"],
+                                       stdout=subprocess.PIPE).communicate()

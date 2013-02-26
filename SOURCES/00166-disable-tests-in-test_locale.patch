@@ -1,0 +1,21 @@
+--- Python-3.3.0/Lib/test/test_locale.py.org	2012-10-09 15:46:11.110288999 -0500
++++ Python-3.3.0/Lib/test/test_locale.py	2012-10-09 16:28:08.323288356 -0500
+@@ -418,7 +418,7 @@
+ 
+ def test_main():
+     tests = [
+-        TestMiscellaneous,
++        #TestMiscellaneous,
+         TestFormatPatternArg,
+         TestLocaleFormatString,
+         TestEnUSNumberFormatting,
+@@ -433,7 +433,8 @@
+         if verbose:
+             print("Some tests will be disabled: %s" % e)
+     else:
+-        tests += [TestNumberFormatting, TestEnUSCollation]
++        #tests += [TestNumberFormatting, TestEnUSCollation]
++        tests += [TestNumberFormatting]
+     run_unittest(*tests)
+ 
+ if __name__ == '__main__':
