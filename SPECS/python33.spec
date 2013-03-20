@@ -126,7 +126,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python33
 Version: %{pybasever}.0
-Release: 7.ius%{?dist}
+Release: 8.ius%{?dist}
 License: Python
 Group: Development/Languages
 
@@ -1208,15 +1208,6 @@ CheckPython optimized
 
 %endif # run_selftest_suite
 
-#remove sym links to allow python33 to be installed along side python32
-rm %{buildroot}%{_bindir}/python3
-rm %{buildroot}%{_bindir}/pydoc3
-rm %{buildroot}%{_bindir}/python3-2to3
-rm %{buildroot}%{_bindir}/python3-config
-rm %{buildroot}%{_bindir}/python3-debug
-rm %{buildroot}%{_bindir}/pyvenv
-rm %{buildroot}%{_bindir}/idle3
-rm %{buildroot}%{_libdir}/pkgconfig/python3.pc
 
 # ======================================================
 # Cleaning up
@@ -1240,9 +1231,11 @@ rm -fr %{buildroot}
 %defattr(-, root, root)
 %doc LICENSE README
 %{_bindir}/pydoc*
+%{_bindir}/python3
 %{_bindir}/python%{pybasever}
 %{_bindir}/python%{pybasever}m
 %{_bindir}/pyvenv-3.3
+%{_bindir}/pyvenv
 %{_mandir}/*/*
 
 %files libs
@@ -1439,18 +1432,22 @@ rm -fr %{buildroot}
 %{_includedir}/python%{LDVERSION_optimized}/*.h
 %exclude %{_includedir}/python%{LDVERSION_optimized}/%{_pyconfig_h}
 %doc Misc/README.valgrind Misc/valgrind-python.supp Misc/gdbinit
+%{_bindir}/python3-config
 %{_bindir}/python%{pybasever}-config
 %{_bindir}/python%{LDVERSION_optimized}-config
 %{_libdir}/libpython%{LDVERSION_optimized}.so
 %{_libdir}/pkgconfig/python-%{LDVERSION_optimized}.pc
 %{_libdir}/pkgconfig/python-%{pybasever}.pc
+%{_libdir}/pkgconfig/python3.pc
 %config(noreplace) %{_sysconfdir}/rpm/macros.python3
 %config(noreplace) %{_sysconfdir}/rpm/macros.pybytecompile
 
 %files tools
 %defattr(-,root,root,755)
+%{_bindir}/python3-2to3
 %{_bindir}/2to3-%{pybasever}
 %{_bindir}/idle3.3
+%{_bindir}/idle3
 %{pylibdir}/Tools
 %doc %{pylibdir}/Doc
 
@@ -1494,6 +1491,7 @@ rm -fr %{buildroot}
 
 # Analog of the core subpackage's files:
 %{_bindir}/python%{LDVERSION_debug}
+%{_bindir}/python3-debug
 
 # Analog of the -libs subpackage's files:
 # ...with debug builds of the built-in "extension" modules:
@@ -1603,6 +1601,10 @@ rm -fr %{buildroot}
 # ======================================================
 
 %changelog
+* Wed Mar 20 2013 Jeffrey Ness <jeffrey.ness@rackspace.com> - 3.3.0-8-ius
+- python3x should not be side by side with other versions of python3x,
+  this is because the package should place the /usr/bin/python3 file.
+
 * Mon Oct 15 2012 Ben Harper <ben.harper@rackspace.com> - 3.3.0-7-ius
 - updated Release to include ius branding
 
