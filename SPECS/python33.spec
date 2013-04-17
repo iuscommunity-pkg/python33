@@ -125,8 +125,8 @@
 # ==================
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python33
-Version: %{pybasever}.0
-Release: 8.ius%{?dist}
+Version: %{pybasever}.1
+Release: 1.ius%{?dist}
 License: Python
 Group: Development/Languages
 
@@ -218,7 +218,7 @@ Patch1:         Python-3.1.1-rpath.patch
 
 # The four TestMIMEAudio tests fail due to "audiotest.au" not being packaged.
 # It's simplest to remove them:
-Patch3: 00003-remove-mimeaudio-tests.patch
+#Patch3: 00003-remove-mimeaudio-tests.patch
 
 # 00055 #
 # Systemtap support: add statically-defined probe points
@@ -494,6 +494,10 @@ Patch164: 00164-disable-interrupted_write-tests-on-ppc.patch
 Patch165: 00165-disable-tests-in-test_gdb.patch
 Patch166: 00166-disable-tests-in-test_locale.patch
 
+
+# test_sysconfig_compiler_vars and test_sysconfig_module fail like in http://bugs.python.org/issue17679
+Patch178: 00178-dont-duplicate-flags-in-sysconfig.patch
+
 # (New patches go here ^^^)
 #
 # When adding new patches to "python" and "python3" in Fedora 17 onwards,
@@ -658,7 +662,7 @@ done
 # Apply patches:
 #
 %patch1 -p1
-%patch3 -p1 -b .remove-mimeaudio-tests
+#%patch3 -p1 -b .remove-mimeaudio-tests
 
 %if 0%{?with_systemtap}
 %patch55 -p1 -b .systemtap
@@ -724,6 +728,7 @@ done
 %endif
 %patch165 -p1
 %patch166 -p1
+%patch178 -p1
 
 # Currently (2010-01-15), http://docs.python.org/library is for 2.6, and there
 # are many differences between 2.6 and the Python 3 library.
@@ -888,12 +893,12 @@ InstallPython() {
   mkdir -p $ConfDir
 
   pushd $ConfDir
-
+  # removing this workaround with 3.3.1 build, resolved upstream, see http://bugs.python.org/issue15298
   # Workaround for http://bugs.python.org/issue14774 : Lib/_sysconfigdata.py
   # is in the srcdir but contains per-config data.
   # Regenerate it each time:
-  rm -f ../../Lib/_sysconfigdata.py
-  make $topdir/Lib/_sysconfigdata.py
+#  rm -f ../../Lib/_sysconfigdata.py
+#  make $topdir/Lib/_sysconfigdata.py
 
 make install DESTDIR=%{buildroot} INSTALL="install -p"
 
@@ -1179,12 +1184,13 @@ CheckPython() {
   # Note that we're running the tests using the version of the code in the
   # builddir, not in the buildroot.
 
+  # removing this workaround with 3.3.1 build, resolved upstream, see http://bugs.python.org/issue15298
   # Workaround for http://bugs.python.org/issue14774, as per the install
   # stanza (albeit from a different directory):
-  rm -f Lib/_sysconfigdata.py
-  pushd $ConfDir
-  make $topdir/Lib/_sysconfigdata.py
-  popd
+#  rm -f Lib/_sysconfigdata.py
+#  pushd $ConfDir
+#  make $topdir/Lib/_sysconfigdata.py
+#  popd
 
   # Run the upstream test suite, setting "WITHIN_PYTHON_RPM_BUILD" so that the
   # our non-standard decorators take effect on the relevant tests:
@@ -1601,6 +1607,14 @@ rm -fr %{buildroot}
 # ======================================================
 
 %changelog
+* Wed Apr 17 2013 Ben Harper <ben.harper@rackspace.com> - 3.3.1-1.ius
+- latest sources for 3.3.1
+- updated Patch55, Patch111, Patch146, Patch153 and Patch157 from
+  python3-3.3.1-1.fc19.src.rpm
+- added Patch178
+- disabled Patch3
+- disabled workaronds 
+
 * Wed Mar 20 2013 Jeffrey Ness <jeffrey.ness@rackspace.com> - 3.3.0-8-ius
 - python3x should not be side by side with other versions of python3x,
   this is because the package should place the /usr/bin/python3 file.
