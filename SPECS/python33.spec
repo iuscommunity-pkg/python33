@@ -727,7 +727,7 @@ done
 %patch164 -p1
 %endif
 %patch165 -p1
-#%patch166 -p1
+%patch166 -p1
 %patch178 -p1
 
 # Currently (2010-01-15), http://docs.python.org/library is for 2.6, and there
@@ -1608,8 +1608,7 @@ rm -fr %{buildroot}
 %changelog
 * Tue Nov 19 2013 Ben Harper <ben.harper@rackspace.com> - 3.3.3-1.ius
 - latest sources for 3.3.3
-- updated Patch111, Patch142 and Patch146
-- diabled Patch166
+- updated Patch111, Patch166, Patch142 and Patch146
 - updated %files for libs
 
 * Tue May 21 2013 Ben Harper <ben.harper@rackspace.com> - 3.3.2-1.ius
