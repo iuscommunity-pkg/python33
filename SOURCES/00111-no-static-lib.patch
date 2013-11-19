@@ -10,25 +10,25 @@ diff -up cpython-59223da36dec/Makefile.pre.in.no-static-lib cpython-59223da36dec
  	$(LINKCC) $(PY_LDFLAGS) $(LINKFORSHARED) -o $@ Modules/python.o $(BLDLIBRARY) $(LIBS) $(MODLIBS) $(SYSLIBS) $(LDLAST)
  
  platform: $(BUILDPYTHON) pybuilddir.txt
-@@ -480,18 +480,6 @@ sharedmods: $(BUILDPYTHON) $(SYSCONFIGDA
- 	$(RUNSHARED) CC='$(CC)' LDSHARED='$(BLDSHARED)' OPT='$(OPT)' \
- 		$(PYTHON_FOR_BUILD) $(srcdir)/setup.py $$quiet build
- 
--# Build static library
--# avoid long command lines, same as LIBRARY_OBJS
--$(LIBRARY): $(LIBRARY_OBJS)
--	-rm -f $@
--	$(AR) $(ARFLAGS) $@ Modules/getbuildinfo.o
--	$(AR) $(ARFLAGS) $@ $(PARSER_OBJS)
--	$(AR) $(ARFLAGS) $@ $(OBJECT_OBJS)
--	$(AR) $(ARFLAGS) $@ $(PYTHON_OBJS) Python/frozen.o
--	$(AR) $(ARFLAGS) $@ $(MODULE_OBJS) $(SIGNAL_OBJS)
--	$(AR) $(ARFLAGS) $@ $(MODOBJS)
--	$(RANLIB) $@
--
- libpython$(LDVERSION).so: $(LIBRARY_OBJS)
- 	if test $(INSTSONAME) != $(LDLIBRARY); then \
- 		$(BLDSHARED) -Wl,-h$(INSTSONAME) -o $(INSTSONAME) $(LIBRARY_OBJS) $(MODLIBS) $(SHLIBS) $(LIBC) $(LIBM) $(LDLAST); \
+#@@ -480,18 +480,6 @@ sharedmods: $(BUILDPYTHON) $(SYSCONFIGDA
+# 	$(RUNSHARED) CC='$(CC)' LDSHARED='$(BLDSHARED)' OPT='$(OPT)' \
+# 		$(PYTHON_FOR_BUILD) $(srcdir)/setup.py $$quiet build
+# 
+#-# Build static library
+#-# avoid long command lines, same as LIBRARY_OBJS
+#-$(LIBRARY): $(LIBRARY_OBJS)
+#-	-rm -f $@
+#-	$(AR) $(ARFLAGS) $@ Modules/getbuildinfo.o
+#-	$(AR) $(ARFLAGS) $@ $(PARSER_OBJS)
+#-	$(AR) $(ARFLAGS) $@ $(OBJECT_OBJS)
+#-	$(AR) $(ARFLAGS) $@ $(PYTHON_OBJS) Python/frozen.o
+#-	$(AR) $(ARFLAGS) $@ $(MODULE_OBJS) $(SIGNAL_OBJS)
+#-	$(AR) $(ARFLAGS) $@ $(MODOBJS)
+#-	$(RANLIB) $@
+#-
+# libpython$(LDVERSION).so: $(LIBRARY_OBJS)
+# 	if test $(INSTSONAME) != $(LDLIBRARY); then \
+# 		$(BLDSHARED) -Wl,-h$(INSTSONAME) -o $(INSTSONAME) $(LIBRARY_OBJS) $(MODLIBS) $(SHLIBS) $(LIBC) $(LIBM) $(LDLAST); \
 @@ -581,7 +569,7 @@ Modules/Setup: $(srcdir)/Modules/Setup.d
  		echo "-----------------------------------------------"; \
  	fi
