@@ -125,7 +125,7 @@
 # ==================
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python33
-Version: %{pybasever}.4
+Version: %{pybasever}.5
 Release: 1.ius%{?dist}
 License: Python
 Group: Development/Languages
@@ -1606,6 +1606,9 @@ rm -fr %{buildroot}
 # ======================================================
 
 %changelog
+* Tue Mar 11 2014 Ben Harper <ben.harper@rackspace.com> - 3.3.5-1.ius
+- latest sources for 3.3.5
+
 * Tue Feb 11 2014 Ben Harper <ben.harper@rackspace.com> - 3.3.4-1.ius
 - latest sources for 3.3.4
 - update Patch157
