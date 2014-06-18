@@ -558,7 +558,8 @@ This package contains files used to embed Python 3 into applications.
 %package devel
 Summary: Libraries and header files needed for Python 3 development
 Group: Development/Libraries
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: %{name} = %{version}-%{release}
+Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Conflicts: %{name} < %{version}-%{release}
 
 %description devel
