@@ -144,6 +144,14 @@ BuildRequires: autoconf
 BuildRequires: bzip2
 BuildRequires: bzip2-devel
 BuildRequires: db4-devel >= 4.7
+
+# expat 2.1.0 added the symbol XML_SetHashSalt without bumping SONAME.  It was
+# backported to EL5 and EL6 to fix CVE-2012-0876.
+# https://rhn.redhat.com/errata/RHSA-2012-0731.html
+%{?el5:BuildRequires: expat-devel >= 1.95.8-11.el5_8}
+%{?el6:BuildRequires: expat-devel >= 2.0.1-11.el6_2}
+%{?el7:BuildRequires: expat-devel >= 2.1.0}
+
 BuildRequires: findutils
 BuildRequires: gcc-c++
 %if %{with_gdbm}
@@ -552,6 +560,13 @@ Summary:        Python 3 runtime libraries
 Group:          Development/Libraries
 #Requires:       %{name} = %{version}-%{release}
 
+# expat 2.1.0 added the symbol XML_SetHashSalt without bumping SONAME.  It was
+# backported to EL5 and EL6 to fix CVE-2012-0876.
+# https://rhn.redhat.com/errata/RHSA-2012-0731.html
+%{?el5:Requires: expat >= 1.95.8-11.el5_8}
+%{?el6:Requires: expat >= 2.0.1-11.el6_2}
+%{?el7:Requires: expat >= 2.1.0}
+
 %description libs
 This package contains files used to embed Python 3 into applications.
 
@@ -643,6 +658,11 @@ chmod +x %{SOURCE1}
 cp -a %{SOURCE6} .
 cp -a %{SOURCE7} .
 %endif # with_systemtap
+
+# Ensure that we're using the system copy of various libraries, rather than
+# copies shipped by upstream in the tarball:
+#   Remove embedded copy of expat:
+rm -r Modules/expat || exit 1
 
 #   Remove embedded copy of libffi:
 for SUBDIR in darwin libffi libffi_arm_wince libffi_msvc libffi_osx ; do
@@ -806,29 +826,12 @@ BuildPython() {
   # Use the freshly created "configure" script, but in the directory two above:
   %global _configure $topdir/configure
  
-# fixes for el6 < 6.3 (which doesn't set the _configure macro globally
-CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ; 
-CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ; 
-FFLAGS="${FFLAGS:-%optflags}" ; export FFLAGS ; 
-%{_configure} --host=%{_host} --build=%{_build} \
-  --program-prefix=%{?_program_prefix} \
-  --prefix=%{_prefix} \
-  --exec-prefix=%{_exec_prefix} \
-  --bindir=%{_bindir} \
-  --sbindir=%{_sbindir} \
-  --sysconfdir=%{_sysconfdir} \
-  --datadir=%{_datadir} \
-  --includedir=%{_includedir} \
-  --libdir=%{_libdir} \
-  --libexecdir=%{_libexecdir} \
-  --localstatedir=%{_localstatedir} \
-  --sharedstatedir=%{_sharedstatedir} \
-  --mandir=%{_mandir} \
-  --infodir=%{_infodir} \
+%configure \
   --enable-ipv6 \
   --enable-shared \
   --with-computed-gotos=%{with_computed_gotos} \
   --with-dbmliborder=gdbm:ndbm:bdb \
+  --with-system-expat \
   --with-system-ffi \
   --with-wide-unicode \
   --enable-loadable-sqlite-extensions \
