@@ -227,9 +227,9 @@ Source7: pyfuntop.stp
 # Was Patch0 in ivazquez' python3000 specfile:
 Patch1:         Python-3.1.1-rpath.patch
 
-# The four TestMIMEAudio tests fail due to "audiotest.au" not being packaged.
-# It's simplest to remove them:
-#Patch3: 00003-remove-mimeaudio-tests.patch
+# Some tests were removed due to audiotest.au not being packaged. This was
+# however added to the archive in 3.3.1, so we no longer delete the tests.
+#  Patch3: 00003-remove-mimeaudio-tests.patch
 
 # 00055 #
 # Systemtap support: add statically-defined probe points
