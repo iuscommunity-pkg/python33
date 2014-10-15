@@ -506,6 +506,11 @@ Patch166: 00166-disable-tests-in-test_locale.patch
 
 
 # test_sysconfig_compiler_vars and test_sysconfig_module fail like in http://bugs.python.org/issue17679
+
+# 00178 #
+# Don't duplicate various FLAGS in sysconfig values
+# http://bugs.python.org/issue17679
+# Does not affect python2 AFAICS (different sysconfig values initialization)
 Patch178: 00178-dont-duplicate-flags-in-sysconfig.patch
 
 # (New patches go here ^^^)
