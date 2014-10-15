@@ -891,7 +891,7 @@ mkdir -p %{buildroot}%{_prefix} %{buildroot}%{_mandir}
 
 InstallPython() {
 
-  ConfName=$1	      
+  ConfName=$1
   PyInstSoName=$2
 
   ConfDir=build/$ConfName
@@ -1188,7 +1188,7 @@ echo -e '#!/bin/sh\nexec `dirname $0`/python%{LDVERSION_optimized}-`uname -m`-co
 %check
 topdir=$(pwd)
 CheckPython() {
-  ConfName=$1	      
+  ConfName=$1
   ConfDir=$(pwd)/build/$ConfName
 
   echo STARTING: CHECKING OF PYTHON FOR CONFIGURATION: $ConfName
