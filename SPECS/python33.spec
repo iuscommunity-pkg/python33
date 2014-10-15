@@ -467,9 +467,8 @@ Patch156: 00156-gdb-autoload-safepath.patch
 Patch157: 00157-uid-gid-overflows.patch
 
 # 00158 #
+# Upstream as of Python 3.3.1
 #  Patch158: 00158-fix-hashlib-leak.patch
-# in python.spec
-# TODO: python3 status?
 
 # 00159 #
 #  Patch159: 00159-correct-libdb-include-path.patch
