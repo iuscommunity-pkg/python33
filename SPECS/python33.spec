@@ -1212,7 +1212,7 @@ CheckPython() {
   #   @unittest._expectedFailureInRpmBuild
   WITHIN_PYTHON_RPM_BUILD= \
   LD_LIBRARY_PATH=$ConfDir $ConfDir/python -m test.regrtest \
-    --verbose --findleaks
+    --verbose --verbose2 --findleaks
 
   echo FINISHED: CHECKING OF PYTHON FOR CONFIGURATION: $ConfName
 
@@ -1950,6 +1950,7 @@ a segfault running test_pyexpat.py (patch 110; upstream issue 9054; rhbz#610312)
 - CVE-2010-1634: fix various integer overflow checks in the audioop
 module (patch 107)
 - CVE-2010-2089: further checks within the audioop module (patch 108)
+%patch178 -p1
 - CVE-2008-5983: the new PySys_SetArgvEx entry point from r81399 (patch 109)
 
 * Thu May 27 2010 Dan Horák <dan[at]danny.cz> - 3.1.2-9
