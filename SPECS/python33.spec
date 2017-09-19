@@ -125,8 +125,8 @@
 # ==================
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python33
-Version: %{pybasever}.6
-Release: 2.ius%{?dist}
+Version: %{pybasever}.7
+Release: 1.ius%{?dist}
 License: Python
 Group: Development/Languages
 # conflict with other IUS python3 packages
@@ -504,11 +504,6 @@ Patch164: 00164-disable-interrupted_write-tests-on-ppc.patch
 Patch165: 00165-disable-tests-in-test_gdb.patch
 Patch166: 00166-disable-tests-in-test_locale.patch
 
-# 0167
-# increase the dh keys to 1024 for the tests.
-# patch from http://bugs.python.org/issue23844
-Patch167: 00167-dh-key-1024.patch
-
 # 00178 #
 # Don't duplicate various FLAGS in sysconfig values
 # http://bugs.python.org/issue17679
@@ -757,7 +752,6 @@ done
 %endif
 %patch165 -p1
 %patch166 -p1
-%patch167 -p1
 %patch178 -p1
 
 # Currently (2010-01-15), http://docs.python.org/library is for 2.6, and there
@@ -1626,6 +1620,11 @@ rm -fr %{buildroot}
 # ======================================================
 
 %changelog
+* Tue Sep 19 2017 Ben Harper <ben.harper@rackspace.com> - 3.3.7-1.ius
+- Latest upstream
+- remove Patch167, patched upstream
+- update Patch55
+
 * Wed Sep 02 2015 Ben Harper <ben.harper@rackspace.com> - 3.3.6-2.ius
 - add Patch167
 
